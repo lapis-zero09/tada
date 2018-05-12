@@ -3,11 +3,12 @@
  */
 
 import React, { Component } from 'react'
-// import { View, Text } from 'react-native'
+import { FlatList, ActivityIndicator } from 'react-native'
 import styled, { css } from 'styled-components'
 import {
   Container,
   View,
+  Separator,
   Header,
   SwipeRow,
   Left,
@@ -15,7 +16,7 @@ import {
   Title,
   Content,
   List,
-  // ListItem,
+  ListItem,
   Text,
   Body,
   Button,
@@ -59,7 +60,51 @@ const ContainerWrapper = styled(Container)`
 `
 
 export default class App extends Component<{}> {
+  constructor(props) {
+    super(props)
+    this.state = { isLoading: true }
+  }
+
+  componentDidMount() {
+    return fetch('http://localhost:8080/api/v1/payments')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState(
+          {
+            isLoading: false,
+            dataSource: responseJson,
+          },
+          () => {},
+        )
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ContainerWrapper>
+          <Header>
+            <Left>
+              <Button transparent>
+                <Icon name="arrow-back" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>tada</Title>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon type="FontAwesome" name="plus" />
+              </Button>
+            </Right>
+          </Header>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </ContainerWrapper>
+      )
+    }
+
     return (
       <ContainerWrapper>
         <Header>
@@ -78,138 +123,58 @@ export default class App extends Component<{}> {
           </Right>
         </Header>
         <Content>
-          <List>
-            <SwipeRowWrapper
-              leftOpenValue={75}
-              rightOpenValue={-75}
-              left={
-                <Button warning onPress={() => alert('Edit')}>
-                  <Icon active type="FontAwesome" name="edit" />
-                </Button>
-              }
-              body={
-                <Body>
-                  <View>
-                    <InlineGroup>
-                      <Icon
-                        style={{ height: 50, fontSize: 50, margin: 10 }}
-                        type="MaterialCommunityIcons"
-                        name="food-fork-drink"
-                      />
-                      <View>
-                        <InlineGroup>
-                          <Text>365円</Text>
-                          <Text>@</Text>
-                          <Text>ラーメン屋</Text>
-                          <Spacer />
-                          <Spacer />
-                          <TextLight>
-                            <Text note>2018/05/11</Text>
-                          </TextLight>
-                        </InlineGroup>
-                        <InlineGroup>
-                          <Tag>this</Tag>
-                          <Tag>is</Tag>
-                          <Tag>fucking</Tag>
-                          <Tag>tag</Tag>
-                          <Tag>shit</Tag>
-                          <Tag>!</Tag>
-                        </InlineGroup>
-                      </View>
-                    </InlineGroup>
-                  </View>
-                </Body>
-              }
-              right={
-                <Button danger onPress={() => alert('Trash')}>
-                  <Icon active name="trash" />
-                </Button>
-              }
-            />
-            <SwipeRowWrapper
-              leftOpenValue={75}
-              rightOpenValue={-75}
-              left={
-                <Button warning onPress={() => alert('Edit')}>
-                  <Icon active type="FontAwesome" name="edit" />
-                </Button>
-              }
-              body={
-                <Body>
-                  <View>
-                    <InlineGroup>
-                      <Icon style={{ height: 50, fontSize: 50, margin: 10 }} type="Ionicons" name="ios-car-outline" />
-                      <View>
-                        <InlineGroup>
-                          <Text>17368000円</Text>
-                          <Text>@</Text>
-                          <Text>Tesla</Text>
-                          <Spacer />
-                          <Spacer />
-                          <TextLight>
-                            <Text note>2018/05/11</Text>
-                          </TextLight>
-                        </InlineGroup>
-                        <InlineGroup>
-                          <Tag>this</Tag>
-                          <Tag>is</Tag>
-                          <Tag>fucking</Tag>
-                          <Tag>tag</Tag>
-                          <Tag>shit</Tag>
-                          <Tag>!</Tag>
-                        </InlineGroup>
-                      </View>
-                    </InlineGroup>
-                  </View>
-                </Body>
-              }
-              right={
-                <Button danger onPress={() => alert('Trash')}>
-                  <Icon active name="trash" />
-                </Button>
-              }
-            />
-            <SwipeRowWrapper
-              leftOpenValue={75}
-              rightOpenValue={-75}
-              left={
-                <Button warning onPress={() => alert('Edit')}>
-                  <Icon active type="FontAwesome" name="edit" />
-                </Button>
-              }
-              body={
-                <Body>
-                  <View>
-                    <InlineGroup>
-                      <Icon style={{ height: 50, fontSize: 50, margin: 10 }} type="MaterialIcons" name="computer" />
-                      <View>
-                        <InlineGroup>
-                          <Text>200000円</Text>
-                          <Text>@</Text>
-                          <Text>Apple</Text>
-                          <Spacer />
-                          <Spacer />
-                          <TextLight>
-                            <Text note>2018/05/11</Text>
-                          </TextLight>
-                        </InlineGroup>
-                        <InlineGroup>
-                          <Tag>this</Tag>
-                          <Tag>is</Tag>
-                          <Tag>pc</Tag>
-                        </InlineGroup>
-                      </View>
-                    </InlineGroup>
-                  </View>
-                </Body>
-              }
-              right={
-                <Button danger onPress={() => alert('Trash')}>
-                  <Icon active name="trash" />
-                </Button>
-              }
-            />
-          </List>
+          <List
+            dataArray={this.state.dataSource}
+            renderRow={(item) => (
+              <SwipeRowWrapper
+                leftOpenValue={75}
+                rightOpenValue={-75}
+                left={
+                  <Button warning onPress={() => alert('Edit')}>
+                    <Icon active type="FontAwesome" name="edit" />
+                  </Button>
+                }
+                body={
+                  <Body>
+                    <View>
+                      <InlineGroup>
+                        <Icon
+                          style={{ height: 50, fontSize: 50, margin: 10 }}
+                          type="MaterialCommunityIcons"
+                          name="food-fork-drink"
+                        />
+                        <View>
+                          <InlineGroup>
+                            <Text>
+                              {item.id}: {item.cost}円 @ {item.placeid}
+                            </Text>
+                            <Spacer />
+                            <Spacer />
+                            <TextLight>
+                              <Text note>2018/05/11</Text>
+                            </TextLight>
+                          </InlineGroup>
+                          <InlineGroup>
+                            <Tag>this</Tag>
+                            <Tag>is</Tag>
+                            <Tag>fucking</Tag>
+                            <Tag>tag</Tag>
+                            <Tag>shit</Tag>
+                            <Tag>!</Tag>
+                          </InlineGroup>
+                        </View>
+                      </InlineGroup>
+                    </View>
+                  </Body>
+                }
+                right={
+                  <Button danger onPress={() => alert('Trash')}>
+                    <Icon active name="trash" />
+                  </Button>
+                }
+              />
+            )}
+          />
         </Content>
       </ContainerWrapper>
     )
