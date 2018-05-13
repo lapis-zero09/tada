@@ -1,7 +1,7 @@
 /**
  * @flow
  */
-/* eslint-disable */
+// /* eslint-disable */
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
@@ -31,7 +31,7 @@ export default class PaymentAdd extends Component<{}> {
   }
 
   submit() {
-    let list = {
+    const list = {
       placeid: parseInt(this.state.placeid, 10),
       cost: parseInt(this.state.cost, 10),
     }

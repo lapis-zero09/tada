@@ -4,7 +4,7 @@
 
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { View, Title, Button, Root, Text, Container, Card, CardItem, Body, Content } from 'native-base'
+import { View, Title, Button, Root, Text, Container } from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
 const center = css`
