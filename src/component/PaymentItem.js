@@ -69,5 +69,4 @@ const PaymentItem = (props) => {
     </ListItem>
   )
 }
-
 export default PaymentItem
