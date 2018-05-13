@@ -1,0 +1,3 @@
+[submodule "tada-server"]
+	path = tada-server
+	url = https://github.com/lapis-zero09/tada-server.git
