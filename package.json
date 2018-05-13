@@ -36,7 +36,7 @@
     "test": "jest",
     "lint": "eslint src/**/*.js",
     "fmt": "prettier --write src/**/*.js",
-    "s": "react-native-scripts ios --simulator='iPhone 8' --reset-cache"
+    "s": "yarn cache clean && react-native run-ios --simulator='iPhone 8'"
   },
   "jest": {
     "preset": "jest-expo"
