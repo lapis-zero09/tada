@@ -56,7 +56,7 @@ export default class App extends Component<{}> {
       })
   }
 
-  _delete(id) {
+  delete(id) {
     fetch('http://localhost:8080/api/v1/payments/' + id, {
       method: 'DELETE',
     })
@@ -133,7 +133,7 @@ export default class App extends Component<{}> {
                 </Button>
               )}
               renderRightHiddenRow={(item) => (
-                <Button full danger onPress={() => this._delete(item.id)}>
+                <Button full danger onPress={() => this.delete(item.id)}>
                   <Icon active name="trash" />
                 </Button>
               )}
