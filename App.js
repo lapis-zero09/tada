@@ -1,25 +1,22 @@
 /**
  * @flow
  */
-/* eslint-disable */
+// /* eslint-disable */
 
 import React, { Component } from 'react'
-import { FlatList } from 'react-native'
+import { ListView } from 'react-native'
 import styled, { css } from 'styled-components'
 import PaymentItem from './src/component/PaymentItem'
 import {
+  Root,
   Container,
-  View,
-  Separator,
+  Toast,
   Header,
-  SwipeRow,
   Left,
   Right,
   Title,
   Content,
   List,
-  ListItem,
-  Text,
   Body,
   Button,
   Icon,
@@ -39,7 +36,7 @@ export default class App extends Component<{}> {
   constructor(props) {
     super(props)
     this.state = { isLoading: true }
-    // this._delete = this._delete.bind(this)
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
   }
 
   componentDidMount() {
@@ -59,19 +56,28 @@ export default class App extends Component<{}> {
       })
   }
 
-  _delete = (id) => () => {
+  _delete(id) {
     fetch('http://localhost:8080/api/v1/payments/' + id, {
       method: 'DELETE',
     })
       .then(() => {
         this.setState({
-          dataSource: this.state.dataSource.filter(function(item, index) {
-            if (item.id != id) return true
+          dataSource: this.state.dataSource.filter((item, index) => {
+            if (item.id !== id) return true
           }),
+        })
+        Toast.show({
+          text: 'Successfully Delete item id ' + id + '!',
+          buttonText: 'Okay',
+          type: 'success',
         })
       })
       .catch((error) => {
-        alert(error)
+        Toast.show({
+          text: 'Delete item id ' + id + ' is Failed!',
+          buttonText: 'Okay',
+          type: 'danger',
+        })
       })
   }
 
@@ -99,31 +105,44 @@ export default class App extends Component<{}> {
       )
     }
 
-    // debugger
     return (
-      <ContainerWrapper>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>tada</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon type="FontAwesome" name="plus" />
-            </Button>
-          </Right>
-        </Header>
-        <Content>
-          <List
-            dataArray={this.state.dataSource}
-            renderRow={(item) => <PaymentItem onDelete={this._delete(item.id)} {...item} />}
-          />
-        </Content>
-      </ContainerWrapper>
+      <Root>
+        <ContainerWrapper>
+          <Header>
+            <Left>
+              <Button transparent>
+                <Icon name="arrow-back" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>tada</Title>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon type="FontAwesome" name="plus" />
+              </Button>
+            </Right>
+          </Header>
+          <Content>
+            <List
+              dataSource={this.ds.cloneWithRows(this.state.dataSource)}
+              renderRow={(item) => <PaymentItem {...item} />}
+              renderLeftHiddenRow={(item) => (
+                <Button full warning onPress={() => alert(item.id)}>
+                  <Icon active type="FontAwesome" name="edit" />
+                </Button>
+              )}
+              renderRightHiddenRow={(item) => (
+                <Button full danger onPress={() => this._delete(item.id)}>
+                  <Icon active name="trash" />
+                </Button>
+              )}
+              leftOpenValue={75}
+              rightOpenValue={-75}
+            />
+          </Content>
+        </ContainerWrapper>
+      </Root>
     )
   }
 }
