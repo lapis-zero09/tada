@@ -1,10 +1,12 @@
 /**
  * @flow
  */
+/* eslint-disable */
 
 import React, { Component } from 'react'
-import { FlatList, ActivityIndicator } from 'react-native'
+import { FlatList } from 'react-native'
 import styled, { css } from 'styled-components'
+import PaymentItem from './src/component/PaymentItem'
 import {
   Container,
   View,
@@ -21,39 +23,13 @@ import {
   Body,
   Button,
   Icon,
+  Spinner,
 } from 'native-base'
 
 const inline = css`
   flex-direction: row;
   align-items: flex-end;
 `
-
-// const center = css`
-//   justify-content: center;
-//   align-items: center;
-// `
-
-const Tag = styled.Text`
-  font-size: 15;
-  margin: 5px;
-  padding: 3px 5px;
-  border: 1px solid palevioletred;
-  border-radius: 3px;
-`
-
-const InlineGroup = styled.View`
-  ${inline};
-  margin: 1%;
-`
-const TextLight = styled.View`
-  justifyContent, space-between;
-`
-
-const Spacer = styled.Text`
-  margin-left: 5%;
-`
-
-const SwipeRowWrapper = styled(SwipeRow)``
 
 const ContainerWrapper = styled(Container)`
   background: #f5fcff;
@@ -63,6 +39,7 @@ export default class App extends Component<{}> {
   constructor(props) {
     super(props)
     this.state = { isLoading: true }
+    // this._delete = this._delete.bind(this)
   }
 
   componentDidMount() {
@@ -78,9 +55,26 @@ export default class App extends Component<{}> {
         )
       })
       .catch((error) => {
-        console.error(error)
+        alert(error)
       })
   }
+
+  _delete = (id) => () => {
+    fetch('http://localhost:8080/api/v1/payments/' + id, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        this.setState({
+          dataSource: this.state.dataSource.filter(function(item, index) {
+            if (item.id != id) return true
+          }),
+        })
+      })
+      .catch((error) => {
+        alert(error)
+      })
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -100,11 +94,12 @@ export default class App extends Component<{}> {
               </Button>
             </Right>
           </Header>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <Spinner />
         </ContainerWrapper>
       )
     }
 
+    // debugger
     return (
       <ContainerWrapper>
         <Header>
@@ -125,55 +120,7 @@ export default class App extends Component<{}> {
         <Content>
           <List
             dataArray={this.state.dataSource}
-            renderRow={(item) => (
-              <SwipeRowWrapper
-                leftOpenValue={75}
-                rightOpenValue={-75}
-                left={
-                  <Button warning onPress={() => alert('Edit')}>
-                    <Icon active type="FontAwesome" name="edit" />
-                  </Button>
-                }
-                body={
-                  <Body>
-                    <View>
-                      <InlineGroup>
-                        <Icon
-                          style={{ height: 50, fontSize: 50, margin: 10 }}
-                          type="MaterialCommunityIcons"
-                          name="food-fork-drink"
-                        />
-                        <View>
-                          <InlineGroup>
-                            <Text>
-                              {item.id}: {item.cost}円 @ {item.placeid}
-                            </Text>
-                            <Spacer />
-                            <Spacer />
-                            <TextLight>
-                              <Text note>2018/05/11</Text>
-                            </TextLight>
-                          </InlineGroup>
-                          <InlineGroup>
-                            <Tag>this</Tag>
-                            <Tag>is</Tag>
-                            <Tag>fucking</Tag>
-                            <Tag>tag</Tag>
-                            <Tag>shit</Tag>
-                            <Tag>!</Tag>
-                          </InlineGroup>
-                        </View>
-                      </InlineGroup>
-                    </View>
-                  </Body>
-                }
-                right={
-                  <Button danger onPress={() => alert('Trash')}>
-                    <Icon active name="trash" />
-                  </Button>
-                }
-              />
-            )}
+            renderRow={(item) => <PaymentItem onDelete={this._delete(item.id)} {...item} />}
           />
         </Content>
       </ContainerWrapper>
