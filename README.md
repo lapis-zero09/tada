@@ -27,3 +27,12 @@ REACT_DEBUGGER="unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger
 ```shell
 yarn run lint
 ```
+
+## help
+
+Somethimes you need ....
+
+```shell
+sudo sysctl -w kern.maxfiles=5242880
+sudo sysctl -w kern.maxfilesperproc=524288
+```
