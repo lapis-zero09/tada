@@ -7,7 +7,20 @@ import React, { Component } from 'react'
 import { ListView } from 'react-native'
 import styled from 'styled-components'
 import PaymentItem from './PaymentItem'
-import { Root, Container, Toast, Content, List, Button, Icon, Spinner, Text, Footer, FooterTab } from 'native-base'
+import {
+  Root,
+  Container,
+  Toast,
+  Content,
+  List,
+  Button,
+  Icon,
+  Spinner,
+  Text,
+  Footer,
+  FooterTab,
+  ActionSheet,
+} from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
 const ContainerWrapper = styled(Container)`
@@ -17,11 +30,13 @@ const ContainerWrapper = styled(Container)`
 export default class PaymentList extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoading: true }
+    this.state = { isLoading: true, showToast: true }
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
   }
 
   componentDidMount() {
+    Toast.toastInstance = null
+    ActionSheet.actionsheetInstance = null
     return fetch('http://localhost:8080/api/v1/payments')
       .then((response) => response.json())
       .then((responseJson) => {
@@ -74,7 +89,7 @@ export default class PaymentList extends Component {
 
     return (
       <Root>
-        <ContainerWrapper>
+        <Container>
           <Content>
             <List
               dataSource={this.ds.cloneWithRows(this.state.dataSource)}
@@ -101,7 +116,7 @@ export default class PaymentList extends Component {
               </Button>
             </FooterTab>
           </Footer>
-        </ContainerWrapper>
+        </Container>
       </Root>
     )
   }

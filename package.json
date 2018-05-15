@@ -32,11 +32,11 @@
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios --simulator='iPhone 8'",
+    "ios": "react-native-scripts ios",
     "test": "jest",
     "lint": "eslint src/**/*.js",
     "fmt": "prettier --write src/**/*.js",
-    "s": "yarn cache clean && react-native run-ios --simulator='iPhone 8'"
+    "s": "yarn cache clean && react-native run-ios"
   },
   "jest": {
     "preset": "jest-expo"

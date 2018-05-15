@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Root, Container, Content, Form, Item, Input, Label, Button, Text, Toast } from 'native-base'
+import { Root, Container, Content, Form, Item, Input, Label, Button, Text, Toast, ActionSheet } from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
 const ContainerWrapper = styled(Container)`
@@ -27,7 +27,12 @@ const ItemWrapper = styled(Item)`
 export default class PaymentAdd extends Component<{}> {
   constructor(props) {
     super(props)
-    this.state = { placeid: null, cost: null }
+    this.state = { placeid: null, cost: null, showToast: true }
+  }
+
+  componentDidMount() {
+    Toast.toastInstance = null
+    ActionSheet.actionsheetInstance = null
   }
 
   submit() {
@@ -38,11 +43,10 @@ export default class PaymentAdd extends Component<{}> {
 
     if (Number.isNaN(list.placeid) || Number.isNaN(list.cost)) {
       Toast.show({
-        text: 'te',
+        text: 'Input must be integer',
         buttonText: 'Okay',
         type: 'danger',
       })
-      alert('input must be integer')
       this.setState({ placeid: '', cost: '' })
     } else {
       fetch('http://localhost:8080/api/v1/payments', {
@@ -55,7 +59,11 @@ export default class PaymentAdd extends Component<{}> {
         .then((response) => response.json())
         .then((responseJson) => {
           if (typeof responseJson.message !== 'undefined') {
-            alert('Ooops! Something went wrong...')
+            Toast.show({
+              text: 'Ooops! Something went wrong...',
+              buttonText: 'Okay',
+              type: 'danger',
+            })
             this.setState({ placeid: '', cost: '' })
           }
           Toast.show({
