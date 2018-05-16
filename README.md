@@ -16,12 +16,6 @@ rm -f data.db && go run main.go
 yarn run s
 ```
 
-if you can use React Native Debugger
-
-```shell
-REACT_DEBUGGER="unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001' ||" yarn run s
-```
-
 ## lint
 
 ```shell

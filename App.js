@@ -1,15 +1,12 @@
-/**
- * @flow
- */
-// /* eslint-disable */
+// @flow
 
 import React, { Component } from 'react'
-import { Scene, Router, Actions } from 'react-native-router-flux'
+import { Scene, Router } from 'react-native-router-flux'
 import { Root } from 'native-base'
 
-import Home from './src/component/Home'
-import PaymentList from './src/component/PaymentList'
-import PaymentAdd from './src/component/PaymentAdd'
+import HomeComponent from './src/presenters/HomeComponent'
+import PaymentList from './src/containers/PaymentListContainer'
+import PaymentAdd from './src/containers/PaymentAdd'
 
 export default class App extends Component<{}> {
   render() {
@@ -17,7 +14,7 @@ export default class App extends Component<{}> {
       <Root>
         <Router>
           <Scene key="root">
-            <Scene key="Home" initial component={Home} title="Home" />
+            <Scene key="Home" initial component={HomeComponent} title="Home" />
             <Scene key="PaymentList" component={PaymentList} title="PaymentList" />
             <Scene key="PaymentAdd" component={PaymentAdd} title="PaymentAdd" />
           </Scene>

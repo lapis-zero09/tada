@@ -1,6 +1,4 @@
-/**
- * @flow
- */
+// @flow
 
 import React from 'react'
 import styled, { css } from 'styled-components'
@@ -21,7 +19,7 @@ const TitleWrapper = styled(Title)`
   color: palevioletred;
 `
 
-const Home = () => (
+const HomeComponent = () => (
   <Root>
     <ContainerWrapper>
       <View>
@@ -34,4 +32,4 @@ const Home = () => (
     </ContainerWrapper>
   </Root>
 )
-export default Home
+export default HomeComponent
