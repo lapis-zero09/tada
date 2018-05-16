@@ -24,7 +24,7 @@ const ItemWrapper = styled(Item)`
 export default class PaymentAdd extends Component<{}> {
   constructor(props) {
     super(props)
-    this.state = { placeid: null, cost: null, showToast: true }
+    this.state = { placeId: null, cost: null, showToast: true }
   }
 
   componentDidMount() {
@@ -34,17 +34,17 @@ export default class PaymentAdd extends Component<{}> {
 
   submit() {
     const list = {
-      placeid: parseInt(this.state.placeid, 10),
+      placeId: parseInt(this.state.placeId, 10),
       cost: parseInt(this.state.cost, 10),
     }
 
-    if (Number.isNaN(list.placeid) || Number.isNaN(list.cost)) {
+    if (Number.isNaN(list.placeId) || Number.isNaN(list.cost)) {
       Toast.show({
         text: 'Input must be integer',
         buttonText: 'Okay',
         type: 'danger',
       })
-      this.setState({ placeid: '', cost: '' })
+      this.setState({ placeId: '', cost: '' })
     } else {
       fetch('http://localhost:8080/api/v1/payments', {
         method: 'POST',
@@ -61,7 +61,7 @@ export default class PaymentAdd extends Component<{}> {
               buttonText: 'Okay',
               type: 'danger',
             })
-            this.setState({ placeid: '', cost: '' })
+            this.setState({ placeId: '', cost: '' })
           }
           Toast.show({
             text: 'Successfully Make payment!',
@@ -90,20 +90,20 @@ export default class PaymentAdd extends Component<{}> {
                 floatingLabel
                 light
                 ref={(item) => {
-                  this.placeid = item
+                  this.placeId = item
                 }}>
-                <Label>placeid</Label>
+                <Label>placeId</Label>
                 <Input
                   getRef={(input) => {
-                    this.placeid = input
+                    this.placeId = input
                   }}
                   returnKeyType="next"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  onChangeText={(placeid) => this.setState({ placeid })}
+                  onChangeText={(placeId) => this.setState({ placeId })}
                   onSubmitEditing={() => this.submit()}
-                  value={this.state.placeid}
+                  value={this.state.placeId}
                 />
               </ItemWrapper>
               <ItemWrapper

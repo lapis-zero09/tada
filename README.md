@@ -13,13 +13,13 @@ rm -f data.db && go run main.go
 ### run client
 
 ```shell
-yarn run s
+yarn s
 ```
 
 ## lint
 
 ```shell
-yarn run lint
+yarn lint
 ```
 
 ## help
