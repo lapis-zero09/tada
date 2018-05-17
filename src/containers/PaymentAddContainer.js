@@ -21,7 +21,7 @@ const ItemWrapper = styled(Item)`
   margin: 2%;
 `
 
-export default class PaymentAdd extends Component<{}> {
+export default class PaymentAddContainer extends Component<{}> {
   constructor(props) {
     super(props)
     this.state = { placeId: null, cost: null, showToast: true }

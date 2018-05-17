@@ -6,7 +6,7 @@ import { Toast, ActionSheet } from 'native-base'
 import PaymentListComponent from '../presenters/PaymentListComponent'
 import LoadingComponent from '../presenters/LoadingComponent'
 
-export default class PaymentList extends Component {
+export default class PaymentListContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoading: true, showToast: true }

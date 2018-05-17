@@ -6,7 +6,7 @@ import { Root } from 'native-base'
 
 import HomeComponent from './src/presenters/HomeComponent'
 import PaymentList from './src/containers/PaymentListContainer'
-import PaymentAdd from './src/containers/PaymentAdd'
+import PaymentAdd from './src/containers/PaymentAddContainer'
 
 export default class App extends Component<{}> {
   render() {
