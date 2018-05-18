@@ -53,5 +53,17 @@
     "redux": "^4.0.0",
     "redux-form": "^7.3.0",
     "styled-components": "^3.2.6"
+  },
+  "importSort": {
+    ".js, .jsx, .es6, .es": {
+      "parser": "babylon",
+      "style": "eslint",
+      "options": {}
+    },
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "eslint",
+      "options": {}
+    }
   }
 }

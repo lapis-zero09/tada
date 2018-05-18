@@ -1,12 +1,12 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Scene, Router } from 'react-native-router-flux'
-import { Root } from 'native-base'
+import { Router, Scene } from 'react-native-router-flux'
 
 import HomeComponent from './src/presenters/HomeComponent'
-import PaymentList from './src/containers/PaymentListContainer'
 import PaymentAdd from './src/containers/PaymentAddContainer'
+import PaymentList from './src/containers/PaymentListContainer'
+import { Root } from 'native-base'
 
 export default class App extends Component<{}> {
   render() {

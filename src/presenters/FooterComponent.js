@@ -1,8 +1,9 @@
 // @flow
 
-import React from 'react'
-import { Button, Icon, Text, Footer, FooterTab } from 'native-base'
+import { Button, Footer, FooterTab, Icon, Text } from 'native-base'
+
 import { Actions } from 'react-native-router-flux'
+import React from 'react'
 
 const FooterComponent = () => (
   <Footer>
