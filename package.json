@@ -36,8 +36,9 @@
     "test": "jest",
     "lint": "eslint src/**/*.js",
     "fmt": "prettier --write src/**/*.js",
-    "s":
-      "yarn cache clean && REACT_DEBUGGER=\"unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001' ||\" react-native run-ios"
+    "s": "yarn cache clean && REACT_DEBUGGER=\"unset ELECTRON_RUN_AS_NODE && open -g 'rndebugger://set-debugger-loc?port=19001' ||\" react-native run-ios",
+    "flow": "flow",
+    "flow-stop": "flow stop"
   },
   "jest": {
     "preset": "jest-expo"
@@ -45,6 +46,7 @@
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
     "expo": "^27.0.1",
+    "flow-typed": "^2.4.0",
     "native-base": "^2.4.4",
     "react": "16.3.1",
     "react-native": "~0.55.2",

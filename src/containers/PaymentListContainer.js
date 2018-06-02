@@ -8,14 +8,25 @@ import LoadingComponent from '../presenters/LoadingComponent'
 
 type Props = { navigation: any }
 
-export default class PaymentListContainer extends Component<Props> {
+type State = {
+  isLoading: boolean,
+  dataSource: any,
+}
+
+export default class PaymentListContainer extends Component<Props, State> {
+  ds: ListView.DataSource
+  deletePayment: (id: number) => void
+
   static navigationOptions = {
     title: 'PaymentList',
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
-    this.state = { isLoading: true }
+    this.state = {
+      isLoading: true,
+      dataSource: null,
+    }
     this.deletePayment = this.deletePayment.bind(this)
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
   }
@@ -42,7 +53,7 @@ export default class PaymentListContainer extends Component<Props> {
     ActionSheet.actionsheetInstance = null
   }
 
-  deletePayment(id) {
+  deletePayment(id: number) {
     fetch('http://localhost:8080/api/v1/payments/' + id, {
       method: 'DELETE',
     })

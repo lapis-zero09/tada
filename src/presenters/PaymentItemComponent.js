@@ -5,6 +5,12 @@ import { View, Text, Body, ListItem, Icon } from 'native-base'
 
 import TagComponent from './TagComponent'
 
+type Props = {
+  id: number,
+  placeId: string,
+  cost: string,
+}
+
 const inline = css`
   flex-direction: row;
   align-items: flex-end;
@@ -22,7 +28,7 @@ const Spacer = styled.Text`
   margin-left: 5%;
 `
 
-const PaymentItem = ({ id, placeId, cost }) => (
+const PaymentItem = ({ id, placeId, cost }: Props) => (
   <ListItem>
     <Body>
       <View>

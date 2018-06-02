@@ -7,9 +7,9 @@ import PaymentItemComponent from './PaymentItemComponent'
 import FooterComponent from '../presenters/FooterComponent'
 
 type Props = {
-  datasrc: any,
-  deletePayment: () => void,
   navigation: any,
+  datasrc: any,
+  deletePayment: (id: number) => void,
 }
 
 const ContainerWrapper = styled(Container)`

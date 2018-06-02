@@ -6,14 +6,21 @@ import PaymentAddComponent from '../presenters/PaymentAddComponent'
 
 type Props = { navigation: any }
 
-export default class PaymentAddContainer extends Component<Props> {
+type State = {
+  cost: string,
+  placeId: string,
+}
+
+export default class PaymentAddContainer extends Component<Props, State> {
+  handleInput: (input: string, inputType: string) => void
+  submit: (placeId: string, cost: string) => void
   static navigationOptions = {
     title: 'PaymentAdd',
   }
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props)
-    this.state = { placeId: null, cost: null }
+    this.state = { placeId: '', cost: '' }
     this.handleInput = this.handleInput.bind(this)
     this.submit = this.submit.bind(this)
   }
@@ -26,10 +33,8 @@ export default class PaymentAddContainer extends Component<Props> {
   handleInput(input: string, inputType: string) {
     if (inputType === 'cost') {
       this.setState({ cost: input })
-      return this.state.cost
     } else if (inputType === 'placeId') {
       this.setState({ placeId: input })
-      return this.state.input
     }
   }
 
@@ -78,7 +83,6 @@ export default class PaymentAddContainer extends Component<Props> {
             type: 'danger',
           })
         })
-      // Actions.PaymentList(() => Actions.refresh)
       this.props.navigation.navigate('PaymentList')
     }
   }
