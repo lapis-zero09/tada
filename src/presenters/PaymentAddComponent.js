@@ -1,9 +1,14 @@
 // @flow
-
-import { Button, Container, Content, Form, Input, Item, Label, Root, Text } from 'native-base'
-
 import React from 'react'
 import styled from 'styled-components'
+import { Button, Container, Content, Form, Input, Item, Label, Text } from 'native-base'
+
+type Props = {
+  placeId: string,
+  cost: string,
+  submit: (placeId: string, cost: string) => void,
+  handleInput: (input: string, inputType: string) => void,
+}
 
 const ContainerWrapper = styled(Container)`
   background: papayawhip;
@@ -21,7 +26,7 @@ const ItemWrapper = styled(Item)`
   margin: 2%;
 `
 
-const PaymentAddComponent = ({ placeId, cost, submit, handleInput }) => (
+const PaymentAddComponent = ({ placeId, cost, submit, handleInput }: Props) => (
   <ContainerWrapper>
     <Content>
       <FormWrapper>

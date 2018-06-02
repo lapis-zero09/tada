@@ -2,6 +2,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { View, Text, Body, ListItem, Icon } from 'native-base'
+
 import TagComponent from './TagComponent'
 
 const inline = css`

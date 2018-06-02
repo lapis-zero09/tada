@@ -1,14 +1,13 @@
 // @flow
-
+import React from 'react'
 import { Button, Footer, FooterTab, Icon, Text } from 'native-base'
 
-import { Actions } from 'react-native-router-flux'
-import React from 'react'
+type Props = { navigation: any }
 
-const FooterComponent = () => (
+const FooterComponent = ({ navigation }: Props) => (
   <Footer>
     <FooterTab>
-      <Button iconRight onPress={Actions.PaymentAdd}>
+      <Button iconRight onPress={() => navigation.navigate('PaymentAdd')}>
         <Text>add new payment</Text>
         <Icon type="MaterialCommunityIcons" name="plus" />
       </Button>

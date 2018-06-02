@@ -1,37 +1,39 @@
 // @flow
-
-import { ActionSheet, Root, Toast } from 'native-base'
 import React, { Component } from 'react'
+import { ActionSheet, Toast } from 'native-base'
 
-import { Actions } from 'react-native-router-flux'
 import PaymentAddComponent from '../presenters/PaymentAddComponent'
 
-export default class PaymentAddContainer extends Component<{}> {
+type Props = { navigation: any }
+
+export default class PaymentAddContainer extends Component<Props> {
+  static navigationOptions = {
+    title: 'PaymentAdd',
+  }
+
   constructor(props) {
     super(props)
-    this.state = { placeId: null, cost: null, showToast: true }
+    this.state = { placeId: null, cost: null }
     this.handleInput = this.handleInput.bind(this)
     this.submit = this.submit.bind(this)
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     Toast.toastInstance = null
     ActionSheet.actionsheetInstance = null
   }
 
-  handleInput({ input, inputType }) {
+  handleInput(input: string, inputType: string) {
     if (inputType === 'cost') {
-      this.setState({
-        cost: input,
-      })
+      this.setState({ cost: input })
+      return this.state.cost
     } else if (inputType === 'placeId') {
-      this.setState({
-        placeId: input,
-      })
+      this.setState({ placeId: input })
+      return this.state.input
     }
   }
 
-  submit(placeId, cost) {
+  submit(placeId: string, cost: string) {
     const list = {
       placeId: parseInt(placeId, 10),
       cost: parseInt(cost, 10),
@@ -76,7 +78,8 @@ export default class PaymentAddContainer extends Component<{}> {
             type: 'danger',
           })
         })
-      Actions.PaymentList(() => Actions.refresh)
+      // Actions.PaymentList(() => Actions.refresh)
+      this.props.navigation.navigate('PaymentList')
     }
   }
 
@@ -88,58 +91,6 @@ export default class PaymentAddContainer extends Component<{}> {
         submit={this.submit}
         handleInput={this.handleInput}
       />
-      // <Root>
-      //   <ContainerWrapper>
-      //     <Content>
-      //       <FormWrapper>
-      //         <ItemWrapper
-      //           floatingLabel
-      //           light
-      //           ref={(item) => {
-      //             this.placeId = item
-      //           }}>
-      //           <Label>placeId</Label>
-      //           <Input
-      //             getRef={(input) => {
-      //               this.placeId = input
-      //             }}
-      //             returnKeyType="next"
-      //             keyboardType="email-address"
-      //             autoCapitalize="none"
-      //             autoCorrect={false}
-      //             onChangeText={(placeId) => this.setState({ placeId })}
-      //             onSubmitEditing={() => this.submit()}
-      //             value={this.state.placeId}
-      //           />
-      //         </ItemWrapper>
-      //         <ItemWrapper
-      //           floatingLabel
-      //           light
-      //           ref={(item) => {
-      //             this.cost = item
-      //           }}>
-      //           <Label>cost</Label>
-      //           <Input
-      //             getRef={(input) => {
-      //               this.cost = input
-      //             }}
-      //             returnKeyType="next"
-      //             keyboardType="email-address"
-      //             autoCapitalize="none"
-      //             autoCorrect={false}
-      //             onChangeText={(cost) => this.setState({ cost })}
-      //             onSubmitEditing={() => this.submit()}
-      //             value={this.state.cost}
-      //           />
-      //         </ItemWrapper>
-      //         <Spacer />
-      //         <Button block primary onPress={() => this.submit()}>
-      //           <Text>Submit</Text>
-      //         </Button>
-      //       </FormWrapper>
-      //     </Content>
-      //   </ContainerWrapper>
-      // </Root>
     )
   }
 }

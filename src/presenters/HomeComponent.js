@@ -2,8 +2,9 @@
 
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { View, Title, Button, Root, Text, Container } from 'native-base'
-import { Actions } from 'react-native-router-flux'
+import { View, Title, Button, Text, Container } from 'native-base'
+
+type Props = { navigation: any }
 
 const center = css`
   justify-content: center;
@@ -19,17 +20,14 @@ const TitleWrapper = styled(Title)`
   color: palevioletred;
 `
 
-const HomeComponent = () => (
-  <Root>
-    <ContainerWrapper>
-      <View>
-        <TitleWrapper>tada</TitleWrapper>
-
-        <Button bordered info onPress={Actions.PaymentList}>
-          <Text>PaymentList</Text>
-        </Button>
-      </View>
-    </ContainerWrapper>
-  </Root>
+const HomeComponent = ({ navigation }: Props) => (
+  <ContainerWrapper>
+    <View>
+      <TitleWrapper>tada</TitleWrapper>
+      <Button bordered info onPress={() => navigation.navigate('PaymentList')}>
+        <Text>PaymentList</Text>
+      </Button>
+    </View>
+  </ContainerWrapper>
 )
 export default HomeComponent
