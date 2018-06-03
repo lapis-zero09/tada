@@ -50,7 +50,6 @@ export default class PaymentAddContainer extends Component<Props, State> {
         buttonText: 'Okay',
         type: 'danger',
       })
-      // alert('ok')
       this.setState({ placeId: '', cost: '' })
     } else {
       fetch('http://localhost:8080/api/v1/payments', {
